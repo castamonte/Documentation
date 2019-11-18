@@ -1,61 +1,61 @@
-# Frequently asked questions
+# ЧАсто задаваемые ВОпросы
 
 
-#### Do I need to have a port opened?
+#### Мне необходимо открыть порт?
 
-This is __optional__, you can browse and use ZeroNet sites without an open port.
-If you want to create a new site it's highly recommended to have an open port.
+Это __не обязательно__, Вы можете просматривать и использовать Zeronet сайты не открывая порт.
+Если Вы хотите создать новый сайт, то настоятельно рекомендуется открыть порт.
 
-At startup ZeroNet tries to open a port for you on your router using
-[UPnP](https://wikipedia.org/wiki/Universal_Plug_and_Play), if this fails you have to do it manually:
+При старте Zeronet пытается открыть порт на Вашем роутере используя 
+[UPnP](https://ru.wikipedia.org/wiki/UPnP), если это не получается, Вам надо сделать это самому:
 
-- Try to access your router's web interface using [http://192.168.1.1](http://192.168.1.1)
-or [http://192.168.0.1](http://192.168.0.1)
-- Look for an "Enable UPnP support" or similar option then restart ZeroNet.
+- Получите доступ к веб-интерфейсу роутера по адресу [http://192.168.1.1](http://192.168.1.1)
+или [http://192.168.0.1](http://192.168.0.1)
+- Найдите и включите "Enable UPnP support" или похожую опцию и перезапустите ZeroNet.
 
-If it still doesn't work then try to find a 'port forwarding' section of your router page. This is different for every router. [Here is a tutorial on YouTube.](https://www.youtube.com/watch?v=aQXJ7sLSz14) The port to forward is 15441.
-
-
----
-
-
-#### Is ZeroNet anonymous?
-
-It's no more anonymous than BitTorrent, but privacy (the possibility to find out who is the owner of the comment/site) will increase as the network and the sites gains more peers.
-
-ZeroNet is made to work with anonymity networks: you can easily hide your IP using the Tor network.
+Если всё равно не работает, попробуйте найти раздел 'port forwarding' в настройках роутера. [На YouTube есть описание.](https://www.youtube.com/watch?v=aQXJ7sLSz14) Надо сделать форвард порта 15441.
 
 
 ---
 
 
-#### How to use ZeroNet with the Tor browser?
+#### Сеть ZeroNet анонимна?
 
-In Tor mode it is recommended to use ZeroNet from within the Tor Browser:
+Zeronet не более анонимен, чем Bittorent, но конфиденциальность (невозможность определить, кто владелец комментария/сайта) увеличивается с увеличением числа пользователей сети и сайта.
 
-- Start the Tor Browser
-- Go to address `about:config` & accept risk warning
-- Search `no_proxies_on`
-- Double click the preference entry
-- Enter `127.0.0.1` & press OK
-- Open [http://127.0.0.1:43110](http://127.0.0.1:43110) in the browser
+ZeroNet создан для работы с анонимными сетями: Вы можете легко скрыть свой IP, используя Tor.
 
-If you still see a blank page:
-
- - Click on NoScript's button (first on the toolbar)
- - Choose "Temporary allow all this page"
- - Reload the page
 
 ---
 
 
-#### How to use ZeroNet with Tor?
+#### Как использовать ZeroNet с Tor browser?
 
-If you want to hide your IP address, install the latest version of ZeroNet then click Tor > Enable Tor for every connection on ZeroHello.
+В режиме Tor рекомендуется использовать ZeroNet из Tor Browser:
 
-On Windows, Tor is bundled with ZeroNet. ZeroNet will attempt to download and unpack Tor on its first run. If this fails for any reason, you can install it manually following the instruction in `core\tools\tor\manual_install.txt`.
+- Запустите Tor Browser
+- Откройте `about:config` и подтвердите риск действий
+- Найдите и дважды кликните `no_proxies_on`
+- Введите `127.0.0.1` и нажмите OK
+- Откройте [http://127.0.0.1:43110](http://127.0.0.1:43110) в браузере
 
-For other OS's, follow the instructions in the "How to make ZeroNet work with Tor under Linux/MacOS" section.
+Если Вы видите пустую страницу:
+
+ - Нажмите кнопку NoScript's (первая на панели инструментов)
+ - Выберите "Temporary allow all this page"
+ - Перезагрузите страницу
+
+---
+
+
+#### Как использовать ZeroNet вместе с Tor?
+
+Если Вы хотите скрыть ваш IP адрес, установите последнюю версию ZeroNet и нажмите Tor > Enable Tor for every connection на странице ZeroHello.
+
+В Windows Tor включён в комплект ZeroNet. ZeroNet будет пытаться скачать и распаковать Tor при первом запуске. 
+В случае ошибки по какой-либо причине, Вы можете установить его вручную по инструкции в `core\tools\tor\manual_install.txt`.
+
+В других ОС, следуйте инструкциям в разделе "Как запустить ZeroNet с Tor под Linux/MacOS".
 
 > __Tip:__ You can verify your IP address using ZeroNet's [Stats](http://127.0.0.1:43110/Stats) page.
 
@@ -65,14 +65,14 @@ For other OS's, follow the instructions in the "How to make ZeroNet work with To
 ---
 
 
-#### How to make ZeroNet work with Tor under Linux/MacOS?
+#### Как запустить ZeroNet с Tor под Linux/MacOS?
 
- - Install Tor for your OS following Tor's official guidelines: [Linux](https://www.torproject.org/docs/tor-doc-unix.html.en) [Mac](https://www.torproject.org/docs/tor-doc-osx.html.en).
+ - Установите Tor в соответствии с официальной инструкцией: [Linux](https://www.torproject.org/docs/tor-doc-unix.html.en) [Mac](https://www.torproject.org/docs/tor-doc-osx.html.en).
  - `sudo nano /etc/tor/torrc`
- - Remove the `#` character from lines `ControlPort 9051` and `CookieAuthentication 1` (line ~57)
- - Restart tor
- - Add permission for yourself to read the auth cookie. With Debian Linux, the command is `sudo usermod -a -G debian-tor [yourlinuxuser]`<br>(if you are not on Debian check the file's user group by `ls -al /var/run/tor/control.authcookie`)
- - Logout/Login with your user to apply group changes
+ - Удалите символ `#` в началах строк `ControlPort 9051` и `CookieAuthentication 1` (примерно ~57 строки)
+ - Перезапустите tor
+ - Добавьте себе разрешение читать auth cookie. В Debian Linux, команда будет `sudo usermod -a -G debian-tor [yourlinuxuser]`<br>(если у Вас не Debian, уточните группу у файла командой `ls -al /var/run/tor/control.authcookie`)
+ - Перелогиньтесь, чтобы изменения разрешений подействовали
 
 > __Tip:__ Use the `ls -ld /var/run/tor` command to make sure it has the correct `drwxr-sr-x` permission bits. (fix it with `chmod g+sx /var/run/tor/` if necessary)
 
@@ -83,9 +83,10 @@ For other OS's, follow the instructions in the "How to make ZeroNet work with To
 
 ---
 
-#### Is it possible to use a configuration file?
+#### Возможно ли использовать конфигурационный файл?
 
-Any command line configuration flag can also be used as a configuration option. Place these options line-by-line into a file called `zeronet.conf` in your top-level zeronet directory (the one with zeronet.py). Example:
+Любой ключ конфигурации из командной строки может быть использован как опция в файле. 
+Размещайте нужные опции построчно в файле `zeronet.conf` в верхнем уровне каталога zeronet (там, где zeronet.py). Например:
 
 ```
 [global]
@@ -96,14 +97,15 @@ ui_restrict =
  2.3.4.5
 ```
 
-To list possible options, use the `zeronet.py --help` command
+Список возможных опций можно получить командой `zeronet.py --help`
 
 ---
 
 
-#### How to make Tor work if my ISP or goverment blocks it?
+#### Как работать с Tor если мой провайдер или правительство блокирует его?
 
-ZeroNet does not include [Tor pluggable transports](https://www.torproject.org/docs/pluggable-transports.html.en) yet. The easiest way to make Tor work in a censored network is to start the Tor browser, configure it to connect to the Tor network with working pluggable transports, and modify ZeroNet's config to use Tor browser's proxy and control port by starting ZeroNet with `--tor_controller 127.0.0.1:9151 --tor_proxy 127.0.0.1:9150` or by adding these parameters to `zeronet.conf`.
+ZeroNet не включает [Tor pluggable transports](https://www.torproject.org/docs/pluggable-transports.html.en) ещё. 
+Самый простой путь работать с Tor в цензурируемой сети это - запустить Tor browser, скофигурировать его для работы с pluggable transports, и использовать прокси и порт контроля Tor browser'а, запуская ZeroNet с `--tor_controller 127.0.0.1:9151 --tor_proxy 127.0.0.1:9150` или добавив эти параметры в `zeronet.conf`.
 
 ```
 [global]
@@ -115,30 +117,30 @@ tor_proxy = 127.0.0.1:9150
 ---
 
 
-#### Can I use the same username on multiple machines?
+#### Могу я использовать одно и то же имя на нескольких машинах?
 
-Yes, simply copy the `data/users.json` file to your new machine.
-
-
----
-
-
-#### How to create a "fancy" (non .bit) site address?
-
-Use [vanitygen](https://bitcointalk.org/index.php?topic=25804.0) to generate one. Once you get your keys, create `data/1YourPublicKey...tCkBzAXTKvJk4uj8` directory. Put some files there.
-
-Then navigate to [http://127.0.0.1:43110/1YourPublicKey...tCkBzAXTKvJk4uj8/](http://127.0.0.1:43110/1YourPublicKey...tCkBzAXTKvJk4uj8/). Drag the `0` button to the left and use the sidebar to sign your site.
+Да, просто скопируйте файл `data/users.json` на новую машину.
 
 
 ---
 
 
-#### How can I register a .bit domain?
+#### Как создать "прикольный" (не .bit) адрес сайта?
 
-You can register .bit domains using [Namecoin](https://namecoin.info/).
-Manage your domains using the client's GUI or by the [command line interface](https://github.com/namecoin/wiki/blob/master/How-to-register-and-configure-.bit-domains.md).
+Используйте [vanitygen](https://bitcointalk.org/index.php?topic=25804.0) чтобы его сгенерировать. Получив пару ключей, создайте каталог `data/1YourPublicKey...tCkBzAXTKvJk4uj8`. Размещайте там свои файлы.
 
-After the registration is done you have to edit your domain's record by adding a zeronet section to it, e.g.:
+Откройте страницу [http://127.0.0.1:43110/1YourPublicKey...tCkBzAXTKvJk4uj8/](http://127.0.0.1:43110/1YourPublicKey...tCkBzAXTKvJk4uj8/). Потяните кнопку `0` влево и используйте инструменты панели чтобы подписать ваш сайт.
+
+
+---
+
+
+#### Как зарегистрировать .bit домен?
+
+Вы можете зарегистрировать .bit домен, используя [Namecoin](https://namecoin.info/).
+Управляйте Вашими доменами из клиентского GUI или из [командной строки](https://github.com/namecoin/wiki/blob/master/How-to-register-and-configure-.bit-domains.md).
+
+После регистрации Вам необходимо отредактировать запись вашего домена, добавив туда секцию zeronet, например:
 
 ```
 {
@@ -164,9 +166,9 @@ After the registration is done you have to edit your domain's record by adding a
 ---
 
 
-#### Can I use the generated site address/private key to accept Bitcoin payments?
+#### Могу я использовать сгенерированные адрес сайта/приватный ключ для получения платежей Bitcoin?
 
-Yes, it's a standard Bitcoin address. The private key is WIF formatted, so you can import it in most clients.
+Да, это стандартный Bitcoin адрес. Приватный ключ имеет формат WIF и может быть импортирован в большинство клиентов.
 
 > __Tip:__ It's not recommended to keep a high amount of money on your site's address, because you have to enter your private key every time you modify your site.
 
@@ -174,10 +176,10 @@ Yes, it's a standard Bitcoin address. The private key is WIF formatted, so you c
 ---
 
 
-#### What happens when someone hosts malicious content?
+#### Что если какой-то хост содержит злонамеренный контент?
 
-The ZeroNet sites are sandboxed, they have the same privileges as any other website you visit over the Internet.
-You are in full control of what you are hosting. If you find suspicious content you can stop hosting the site at any time.
+Zeronet сайты запускаются в песочнице и имеют такие же привилегии, как и любой другой сайт, который Вы посещаете в Internet.
+У Вас есть полный контроль над тем, что Вы раздаёте. Если Вы обнаружите подозрительный контент, Вы можете удалить у себя этот сайт в любое время.
 
 
 ---
