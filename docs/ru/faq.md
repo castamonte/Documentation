@@ -185,11 +185,11 @@ Zeronet сайты запускаются в песочнице и имеют т
 ---
 
 
-#### Is it possible to install ZeroNet to a remote machine?
+#### Возможно ли установить ZeroNet на удалённой машине?
 
-Yes, you have to enable the UiPassword plugin by renaming the __plugins/disabled-UiPassword__ directory to __plugins/UiPassword__,
-then start ZeroNet on the remote machine using <br>`zeronet.py --ui_ip "*" --ui_password anypassword`.
-This will bind the ZeroNet UI webserver to all interfaces, but to keep it secure you can only access it by entering the given password.
+Да, Вам надо включить плагин UiPassword, переименовав каталог __plugins/disabled-UiPassword__ directory в __plugins/UiPassword__,
+и затем запустить ZeroNet на удалённой машине с ключами <br>`zeronet.py --ui_ip "*" --ui_password anypassword`.
+Это подключит вебсервер ZeroNet UI ко всем интерфейсам, но доступ к нему будет только с указанным паролем.
 
 > __Tip:__ You can also restrict the interface based on ip address by using `--ui_restrict ip1 ip2`.
 
@@ -199,9 +199,9 @@ This will bind the ZeroNet UI webserver to all interfaces, but to keep it secure
 ---
 
 
-#### Is there any way to track the bandwidth ZeroNet is using?
+#### Есть способ отследить трафик, потребляемый ZeroNet?
 
-The sent/received bytes are displayed at ZeroNet's sidebar.<br>(open it by dragging the topright `0` button to left)
+Отправленные/принятые байты показаны на боковой панели ZeroNet.<br>(открывается перетаскиванием влево кнопки `0`, что справа вверху)
 
 > __Tip:__ Per connection statistics page: [http://127.0.0.1:43110/Stats](http://127.0.0.1:43110/Stats)
 
@@ -209,52 +209,52 @@ The sent/received bytes are displayed at ZeroNet's sidebar.<br>(open it by dragg
 ---
 
 
-#### What happens if two people use the same keys to modify a site?
+#### Что будет, если два человека используют одинаковые ключи при редактировании сайта?
 
-Every content.json file is timestamped, the clients always accept the newest one with a valid signature.
-
-
----
-
-
-#### Does ZeroNet use Bitcoin's blockchain?
-
-No, ZeroNet only uses the cryptography of Bitcoin for site addresses and content signing/verification.
-User identification is based on Bitcoin's [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki) format.
-
-Namecoin's blockchain is being used for domain registrations, however clients do not download the blockchain. Blockchain metadata is instead passed over the ZeroNet network.
+Каждый файл content.json хранит время изменения, клиенты получат доступ к самому новому с правильной подписью.
 
 
 ---
 
 
-#### Does ZeroNet only support HTML, CSS websites?
+#### ZeroNet использует блокчейн Bitcoin'а?
 
-ZeroNet is built for dynamic, real-time updated websites, but you can serve any kind of files using it, such as (VCS repositories, your own thin-client, database, etc.
+Нет, ZeroNet использует только криптографию Bitcoin'а для адресов сайтов и подписи/верификации контента.
+Идентификация пользователей основана на Bitcoin'овском формате [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki).
+
+Блокчейн Namecoin используется для регистрации доменов, но клиенты не скачивают себе блокчейн. Через сеть Zeronet передаются метаданные блокчейна.
 
 
 ---
 
 
-#### How can I create a new ZeroNet site?
+#### ZeroNet поддерживает сайты только из HTML и CSS?
 
-[Follow these instructions.](../using_zeronet/create_new_site/)
+ZeroNet создан для динамичных, обновляемых в рельном времени сайтов, но Вы можете раздавать любые типы файлов, пользуясь им, такие как репозитории VCS, Ваши собственные тонкие клиенты, базы данных и т.д.
+
 
 ---
 
 
-#### What happens when I access a site?
+#### Как создать новый ZeroNet сайт?
 
-- When you want to open a new site it asks for visitor's IP addresses from BitTorrent trackers.
-- Initially, a file named __content.json__ is downloaded, which holds all other filenames,
-  __hashes__ and the site owner's cryptographic signature.
-- The downloaded content.json file is __verified__ using the site's __address__ and the site owner's __signature__ from the file.
-- Other files (html, css, js...) are then __downloaded__ and verified using their size and SHA512 hash from content.json.
-- Each visited site then becomes __also served by you__.
-- If the site owner (who has the private key for the site address) __modifies__ the site, then he/she signs
-  the new content.json and __publishes it to peers__. After the peers have verified the file's
-  integrity (using the signature), they __download the modified files__ and serve the new content to other peers.
+[Следуйте этой инструкции.](../using_zeronet/create_new_site/)
 
-More info:
- [ZeroNet sample sites](../using_zeronet/sample_sites/),
- [Slideshow about how ZeroNet works](https://docs.google.com/presentation/d/1_2qK1IuOKJ51pgBvllZ9Yu7Au2l551t3XBgyTSvilew/pub)
+---
+
+
+#### Что происходит, когда я открываю сайт?
+
+- Когда вы открываете сайт, он запрашивает IP адреса раздающих его узлов у трекеров BitTorrent.
+- Сначала скачивается файл __content.json__, содержащий имена остальных файлов сайта,
+  __хэши__ и криптографическую подпись владельца сайта.
+- Загруженный файл content.json __верифицируется__ с использованием __адреса__ сайта и __подписи__ владельца сайта из этого файла.
+- Остальные файлы (html, css, js...) после этого __скачиваются__ и верифицируются с использованием их размеров и их хэшей SHA512 из content.json.
+- Каждый посещённый сайт начинает __раздаваться Вами__.
+- Если владелец сайта (тот, кто имеет приватный ключ для адреса сайта) __изменяет__ сайт, то он подписывает
+  новый content.json и __публикует его для остальных узлов__. После того, как пиры верифицируют целостность
+  файла (использую подпись владельца), они __скачивают изменённые файлы__ и раздают новый контент остальным пирам.
+
+Дополнительно:
+ [Примеры сайтов ZeroNet](../using_zeronet/sample_sites/),
+ [Слайдшоу про работу ZeroNet](https://docs.google.com/presentation/d/1_2qK1IuOKJ51pgBvllZ9Yu7Au2l551t3XBgyTSvilew/pub)
