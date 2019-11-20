@@ -1,3 +1,3 @@
-# Translation HowTo
+# Перевод HowTo
 
-Instructions goes here.
+Инструкции здесь.
