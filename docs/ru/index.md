@@ -61,7 +61,7 @@ ZeroNet поставляется со встроенной базой данны
 * Когда владелец сайта изменяет его содержимое, он подписывает новый список и публикует его раздающим узлам (пирам).
   Пиры, проверив целостность списка файлов (используя подписи), скачивают изменённые файлы и раздают новый контент другим пирам.
 
-##### [Slideshow about ZeroNet cryptography, content updates, multi-user sites &raquo;](https://docs.google.com/presentation/d/1_2qK1IuOKJ51pgBvllZ9Yu7Au2l551t3XBgyTSvilew/pub?start=false&loop=false&delayms=3000)
+##### [Слайдшоу про криптографию ZeroNet, обновления контента, многопользовательские сайты &raquo;](https://docs.google.com/presentation/d/1_2qK1IuOKJ51pgBvllZ9Yu7Au2l551t3XBgyTSvilew/pub?start=false&loop=false&delayms=3000)
 
 
 ## Снимки экрана
@@ -70,7 +70,7 @@ ZeroNet поставляется со встроенной базой данны
 
 ![ZeroTalk](./img/zerotalk.png)
 
-##### [More screenshots &raquo;](/using_zeronet/sample_sites/)
+##### [Больше скриншотов &raquo;](/using_zeronet/sample_sites/)
 
 ## Ограничения
 
