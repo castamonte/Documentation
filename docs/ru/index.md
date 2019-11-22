@@ -82,7 +82,7 @@ ZeroNet поставляется со встроенной базой данны
 
 Bitcoin: 1QDhxQ6PraUZa21ET5fYUCPgdrwBomnFgX
 
-[Страница поддержки проекта полностью](help_zeronet/donate/)
+[Страница поддержки проекта](help_zeronet/donate/)
 
 ### Спасибо!
 
