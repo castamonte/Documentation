@@ -1,18 +1,18 @@
-# Create new ZeroNet site
+# Создание нового ZeroNet сайта
 
-## Easy way: Using the web interface
+## Простой путь: Используя веб-интерфейс
 
- * Click on **⋮** > **"Create new, empty site"** menu item on the site [ZeroHello](http://127.0.0.1:43110/1HeLLo4uzjaLetFx6NH3PMwFP3qbRbTf3D).
- * You will be **redirected** to a completely new site that is only modifiable by you!
- * You can find and modify your site's content in **data/[yoursiteaddress]** directory
- * After the modifications open your site, drag the topright "0" button to left, then press **sign** and **publish** buttons on the bottom
+ * Кликните на пункт меню **⋮** > **"Create new, empty site"** на сайте [ZeroHello](http://127.0.0.1:43110/1HeLLo4uzjaLetFx6NH3PMwFP3qbRbTf3D).
+ * Вы будете **перенаправлены** на совершенно новый сайт, изменять который можете только Вы!
+ * Найти и изменять контент Вашего сайта Вы можете в каталоге **data/[АдресВашегоСайта]**
+ * После изменений откройте Ваша сайт, потяните влево кнопку "0" справа вверху, потом нажмите кнопку **Sign and publish** внизу
 
-## Manual way: Using the command line
+## Вручную: Используя командную строку
 
-### 1. Create site structure
+### 1. Создайте структуру сайта
 
-* Shut down ZeroNet if it is running
-* Browse to the folder where ZeroNet is installed and run:
+* Остановите ZeroNet если он запущен
+* Перейдите в каталог, где установлен ZeroNet и выполните команды:
 
 ```bash
 $ zeronet.py siteCreate
@@ -25,15 +25,15 @@ $ zeronet.py
 ...
 ```
 
-- This will create the initial files for your site inside ```data/13DNDkMUExRf9Xa9ogwPKqp7zyHFEqbhC2```.
+- Это создаст первоначальные файлы Вашего сайта в каталоге ```data/13DNDkMUExRf9Xa9ogwPKqp7zyHFEqbhC2```.
 
-> __Note:__
-> Windows users using the bundle version must browse into the ZeroBundle/ZeroNet folder and run `"../Python/python.exe" zeronet.py siteCreate`
+> __Кстати:__
+> Пользователям Windows, использующие версию bundle, нужно перейти в каталог ZeroBundle/ZeroNet и выполнить `"../Python/python.exe" zeronet.py siteCreate`
 
-### 2. Build/Modify site
+### 2. Написание/Изменение сайта
 
-* Update the site files located in ```data/[your site address key]``` (eg: 13DNDkMUExRf9Xa9ogwPKqp7zyHFEqbhC2).
-* When your site is ready run:
+* Редактируйте фалы сайта, расположенные в ```data/[АдресВашегоСайта]``` (eg: 13DNDkMUExRf9Xa9ogwPKqp7zyHFEqbhC2).
+* Когда Ваш сайт будет готов, выполните:
 
 ```bash
 $ zeronet.py siteSign 13DNDkMUExRf9Xa9ogwPKqp7zyHFEqbhC2
@@ -41,11 +41,11 @@ $ zeronet.py siteSign 13DNDkMUExRf9Xa9ogwPKqp7zyHFEqbhC2
 Private key (input hidden):
 ```
 
-* Enter the private key you got when you created the site. This will sign all files so peers can verify that the site owner is who made the changes.
+* Введите приватный ключ, который Вы получили при создании сайта. Это подпишет все файлы и пиры смогут удостовериться, что изменения внёс именно владелец сайта.
 
-### 3. Publish site changes
+### 3. Опубликуйте изменения сайта
 
-* In order to inform peers about the changes you made you need to run:
+* Чтобы известить пиров об изменении сайта Вам надо выполнить:
 
 ```bash
 $ zeronet.py sitePublish 13DNDkMUExRf9Xa9ogwPKqp7zyHFEqbhC2
@@ -55,8 +55,8 @@ Site:13DNDk..bhC2 Successfuly published to 3 peers
 - Serving files....
 ```
 
-* That's it! You've successfully signed and published your modifications.
-* Your site will be accessible from: ```http://localhost:43110/13DNDkMUExRf9Xa9ogwPKqp7zyHFEqbhC2```
+* Это всё! Вы полностью подписали и опубликовали свои изменения.
+* Ваш сайт теперь доступен по адресу: ```http://localhost:43110/13DNDkMUExRf9Xa9ogwPKqp7zyHFEqbhC2```
 
 
-**Next steps:** [ZeroNet Developer Documentation](../../site_development/getting_started/)
+**Дальнейшие шаги:** [ZeroNet Developer Documentation](../../site_development/getting_started/)
