@@ -1,20 +1,20 @@
-# Coding standards if you want to collaborate to ZeroNet
- - Follow [PEP8](https://www.python.org/dev/peps/pep-0008/)
- - Simple is better than complex
- - Premature optimization is the root of all evil
+# Стандарты программирования, если Вы хотите участвовать в разработке ZeroNet
+ - Следуйте правилам [PEP8](https://www.python.org/dev/peps/pep-0008/)
+ - Лучше проще, чем сложнее
+ - Преждевременная оптимизация - корень всего зла
 
-### Naming
+### Именования
  - ClassNames: Capitalized, CamelCased
- - functionNames: starts with lowercase, camelCased
+ - functionNames: начинаются с lowercase, camelCased
  - variable_names: lowercased, under_scored
 
-### Variables
- - file_path: File path realtive to working dir (data/17ib6teRqdVgjB698T4cD1zDXKgPqpkrMg/css/all.css)
- - inner_path: File relative to site dir (css/all.css)
+### Переменные
+ - file_path: путь к файлу относительно рабочего каталога (data/17ib6teRqdVgjB698T4cD1zDXKgPqpkrMg/css/all.css)
+ - inner_path: файл относительно каталога сайта (css/all.css)
  - file_name: all.css
- - file: Python file object
- - privatekey: Private key for the site (without _)
+ - file: объект Python file
+ - privatekey: приватный ключ сайта (без _)
 
-### Source files directories and naming
- - One class per file is preferred
- - Source file name and directory comes from ClassName: WorkerManager class = Worker/WorkerManager.py
+### Каталоги и именование исходных файлов
+ - Предпочтительно один класс в файле
+ - Имена исходного файла и каталога соответствуют имени класса: WorkerManager class = Worker/WorkerManager.py
