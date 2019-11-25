@@ -1,64 +1,64 @@
-# Contributing to ZeroNet
+# Содействие ZeroNet
 
-Thank you for using ZeroNet. ZeroNet is a collaborative effort of 67+ decentralization enthusiasts just like you. We appreciate all users that catch bugs, improve documentation and have good ideas of designing new protocols. Here are a few guidelines we ask you to follow to get started with making your contribution.
+Спасибо за использование ZeroNet. ZeroNet это с оis a coвместные усилия более чем 67+ децентрализованных энтузиастов, таких же как Вы. Мы ценим всех пользователей, обнаруживающих ошибки, улучшающих документацию и имеющих хорошие идеи по разработке новых протоколов. Вот несколько рекомендаций, которым мы просим вас следовать, чтобы начать вносить свой вклад.
 
-### You don’t have to contribute source code
+### Вам не нужно поставлять исходный код
 
-In fact, a majority of contributors do not submit source code. Even if you like to write programs, other types of contribution are also welcomed.
+Действительно, большинство помощников не пишут исходный код. Даже если Вы любите писать программы, приветствуются и другие виды участия.
 
-### Do you like to write?
+### Вам нравится писать?
 
-- Write about ZeroNet.
-- Write tutorials to help people set things up.
-- Help translate ZeroNet.
-- Improve this documentation. This documentation is a written by many community members all over the world.
+- Пишите о ZeroNet.
+- Напишите руководства, чтобы помочь другим с  настройкой.
+- Помогите с переволом ZeroNet.
+- Улучшите эту документацию. Эта документация написана многими участниками комьюнити со всего мира.
 
-### Do you like helping people?
+### Вам нравится помогать людям?
 
-- Subscribe to our [issue tracker on GitHub](https://github.com/HelloZeroNet/ZeroNet/issues) and help people solve problems.
-- Join us on [Gitter](https://gitter.im/HelloZeroNet/ZeroNet) and IRC channel [#zeronet @ freenode](https://kiwiirc.com/client/irc.freenode.net/zeronet) and help answer questions.
-- Set up a seed box and help make the network faster.
+- Подпишитесь на наш [трекер на GitHub](https://github.com/HelloZeroNet/ZeroNet/issues) и помогайте людям решать проблемы.
+- Присоединяйтесь к нам в [Gitter](https://gitter.im/HelloZeroNet/ZeroNet) и в канале IRC [#zeronet @ freenode](https://kiwiirc.com/client/irc.freenode.net/zeronet) и помогайте отвечать на вопросы.
+- Настройте раздающий узел и помогите сделать сеть быстрее.
 
-### Do you like to make websites?
+### Вам нравится делать вебсайты?
 
-- Create new ZeroNet sites. Go ahead and make your own blog on ZeroNet. [It is easy and costs little.](../using_zeronet/create_new_site.md)
-- “Content is king!” as NoFish puts. The network is worth nothing without content, so we need You to make it succeed.
+- Создавайте новые сайты ZeroNet. Начните и сделайте свой собственный блог в ZeroNet. [Это легко и просто.](../using_zeronet/create_new_site.md)
+- “Content is king!” как сказал NoFish. Сеть ничего не стоит без контента, так что Вы нужны нам, чтобы сделать её успешной.
 
-### Do you like to do research?
+### Вам нравится исследовать?
 
-- Help us investigate our [hard issues](https://github.com/HelloZeroNet/ZeroNet/labels/help%20wanted).
-- Join our discussion of designing new features and protocols, such as [I2P support](https://github.com/HelloZeroNet/ZeroNet/issues/45) and [DHT support](https://github.com/HelloZeroNet/ZeroNet/issues/57).
-- Do you own a [Raspberry Pi](https://github.com/HelloZeroNet/ZeroNet#linux-terminal), a [C.H.I.P.](http://127.0.0.1:43110/Blog.ZeroNetwork.bit/?Post:94:Running+ZeroNet+on+a+$9%C2%A0computer) or an [open router](https://github.com/HelloZeroNet/ZeroNet/issues/783)? Try running ZeroNet on it and tell us how well ZeroNet works on your device.
+- Помогите нам в решении [тяжёлых проблем](https://github.com/HelloZeroNet/ZeroNet/labels/help%20wanted).
+- Присоединяйтесь в нашим обсуждениям новых функций и протоколов, таких как [поддержка I2P](https://github.com/HelloZeroNet/ZeroNet/issues/45) и [поддержка DHT](https://github.com/HelloZeroNet/ZeroNet/issues/57).
+- Имеете свой [Raspberry Pi](https://github.com/HelloZeroNet/ZeroNet#linux-terminal), и [C.H.I.P.](http://127.0.0.1:43110/Blog.ZeroNetwork.bit/?Post:94:Running+ZeroNet+on+a+$9%C2%A0computer) or an [open router](https://github.com/HelloZeroNet/ZeroNet/issues/783)? Попробуйте запустить на нём ZeroNet и расскажите нам, как хорошо ZeroNet работает на Вашем устройстве.
 
-### Do you like to write code?
+### Вам нравится писать код?
 
-- If you know Python, you can pick a task from our [issue tracker on GitHub](https://github.com/HelloZeroNet/ZeroNet/issues).
-- You are also welcomed develop your own ideas. Before you start, please [open a new discussion](https://github.com/HelloZeroNet/ZeroNet/issues/new) to let the community know, so you can make sure we can share our ideas to make the best out of it.
-- Keep your coding style consistent. We ask you to follow our coding convention below.
+- Если Вы знаете Python, Вы можете выбрать задачу из нашего [трекера на GitHub](https://github.com/HelloZeroNet/ZeroNet/issues).
+- Вы также можете воплощать свои собственные идеи. Прежде чем Вы начнёте, пожалуйста, [откройте новое обсуждение](https://github.com/HelloZeroNet/ZeroNet/issues/new) чтобы сообщество узнало о них и могло поделиться своими идеями, чтобы добиться максимальной пользы.
+- Будьте последовательны в своём стиле кодирования. Ниже мы предлагаем наше соглашение о стиле кодирования.
 
-### Do you like to offer financial support?
+### Вы любите оказывать финансовую помощь?
 
-- You can [donate bitcoins](donate.md) to support ZeroNet.
+- Вы можете [пожертвовать биткойны](donate.md) для поддержки ZeroNet.
 
 
-## Coding convention
+## Соглашение о кодировании
 
-- Follow [PEP8](https://www.python.org/dev/peps/pep-0008/)
-- Simple is better than complex
-- Premature optimization is the root of all evil
+- Следуйте правилам [PEP8](https://www.python.org/dev/peps/pep-0008/)
+- Лучше проще, чем сложнее
+- Преждевременная оптимизация - корень всего зла
 
-### Naming
+### Именования
 - ClassNames: Capitalized, CamelCased
-- functionNames: starts with lowercase, camelCased
+- functionNames: начинаются с lowercase, camelCased
 - variable_names: lowercased, under_scored
 
-### Variables
-- file_path: File path relative to working dir (data/17ib6teRqdVgjB698T4cD1zDXKgPqpkrMg/css/all.css)
-- inner_path: File relative to site dir (css/all.css)
+### Переменные
+- file_path: путь к файлу относительно рабочего каталога (data/17ib6teRqdVgjB698T4cD1zDXKgPqpkrMg/css/all.css)
+- inner_path: файл относительно каталога сайта (css/all.css)
 - file_name: all.css
-- file: Python file object
-- privatekey: Private key for the site (without `_`)
+- file: объект Python file
+- privatekey: приватный ключ сайта (без `_`)
 
-### Source files directories and naming
-- One class per file is preferred
-- Source file name and directory comes from ClassName: WorkerManager class = Worker/WorkerManager.py
+### Каталоги и именование исходных файлов
+- Предпочтительно один класс в файле
+- Имена исходного файла и каталога соответствуют имени класса: WorkerManager class = Worker/WorkerManager.py
