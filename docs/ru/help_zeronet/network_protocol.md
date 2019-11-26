@@ -1,52 +1,52 @@
-# ZeroNet network protocol
+# Протокол сети ZeroNet
 
- - Every message is encoded using [MessagePack](http://msgpack.org/)
- - Every request has 3 parameters:
-    * `cmd`: The request command
-    * `req_id`: The request's unique id (simple, incremented nonce per-connection), the client has to include this when reply to the command.
-    * `params`: Parameters for the request
- - Example request: `{"cmd": "getFile", "req_id": 1, "params:" {"site": "1EU...", "inner_path": "content.json", "location": 0}}`
- - Example response: `{"cmd": "response", "to": 1, "body": "content.json content", "location": 1132, "size": 1132}`
- - Example error response: `{"cmd": "response", "to": 1, "error": "Unknown site"}`
+ - Каждое сообщение зашифровано с помощью [MessagePack](http://msgpack.org/)
+ - Каждый запрос имеет 3 параметра:
+    * `cmd`: Команда запроса
+    * `req_id`: Уникальный идентификатор запроса (простой, инкрементальный, одноразовый на соединение), который клиент должен повторить при ответе на команду.
+    * `params`: Параметры запроса
+ - Пример запроса: `{"cmd": "getFile", "req_id": 1, "params:" {"site": "1EU...", "inner_path": "content.json", "location": 0}}`
+ - Пример ответа: `{"cmd": "response", "to": 1, "body": "content.json content", "location": 1132, "size": 1132}`
+ - Пример ответа про ошибку: `{"cmd": "response", "to": 1, "error": "Unknown site"}`
 
 
-# Handshake
-Every connection begins with a handshake by sending a request to the target network address:
+# Начало соединения (хендшейк)
+Каждое соединение начинается с хендшейка посылкой запроса на целевой адрес сети:
 
-Parameter            | Description
+Параметр             | Описание
                  --- | ---
-**crypt**            | Null/None, only used in respones
-**crypt_supported**  | An array of connection encryption methods supported by the client
-**fileserver_port**  | The client's fileserver port
-**onion**            | (Only used on tor) The client's onion address
-**protocol**         | The protocol version the client uses (v1 or v2)
-**port_opened**      | The client's client port open status
-**peer_id**          | (Not used on tor) The client's peer_id
-**rev**              | The client's revision number
-**version**          | The client's version
-**target_ip**        | The server's network address
+**crypt**            | Null/None, используется только в ответе
+**crypt_supported**  | Массив методов шифрования соединения, поддерживаемых клиентом
+**fileserver_port**  | Клиентский порт файлового сервера
+**onion**            | (Используется только в tor) Клиентский onion адрес
+**protocol**         | Версия протокола, используемая клиентом (v1 или v2)
+**port_opened**      | Статус открытости клиентского порта клиента
+**peer_id**          | (Не используется в tor) Клиентский идентификатор пира
+**rev**              | Номер ревизии клиента
+**version**          | Версия клиента
+**target_ip**        | IP адрес сервера
 
-The target initialize the encryption on the socket based on `crypt_supported`, then return:
+Цель инициализирует шифрование на сокете, основываясь на `crypt_supported`, и затем отвечает:
 
-Return key           | Description
+Возвращаемый ключ    | Описание
                  --- | ---
-**crypt**            | The encryption to use
-**crypt_supported**  | An array of connection encryption methods supported by the server
-**fileserver_port**  | The server's fileserver port
-**onion**            | (Only used on tor) The server's onion address
-**protocol**         | The protocol version the server uses (v1 or v2)
-**port_opened**      | The server's client port open status
-**peer_id**          | (Not used on tor) The server's peer_id
-**rev**              | The server's revision number
-**version**          | The server's version
-**target_ip**        | The client's network address
+**crypt**            | Используемое шифрование
+**crypt_supported**  | Массив методов шифрования соединения, поддерживаемый сервером
+**fileserver_port**  | Серверный порт файлового сервера
+**onion**            | (Используется только в tor) Серверный onion адрес
+**protocol**         | Версия протокола, используемая сервером (v1 или v2)
+**port_opened**      | Статус открытости серверного порта клиента
+**peer_id**          | (Не используется в tor) Серверный идентификатор пира
+**rev**              | Номер ревизии сервера
+**version**          | Версия сервера
+**target_ip**        | IP адрес сервера
 
-> **Note:** No encryption used on .onion connections, as the Tor network provides the transport security by default.
-> **Note:** You can also implicitly initialize SSL before the handshake if you can assume it supported by remote client.
+> **Кстати:** Шифрование не используется в соединениях .onion, поскольку сеть Tor предоставляет транспортную безопасность по умолчанию.
+> **Кстати:** Вы также можете неявно инициализировать SSL перед хендшейком, если считаете, что он поддерживается удаленным клиентом.
 
-**Example**:
+**Пример**:
 
-Sent handshake:
+Посылаем хендшейк:
 
 ```json
 {
@@ -67,7 +67,7 @@ Sent handshake:
 }
 ```
 
-Return:
+Ответ:
 
 ```
 {
@@ -86,57 +86,57 @@ Return:
 }
 ```
 
-# Peer requests
+# Запросы пира
 
 #### getFile _site_, _inner_path_, _location_, _[file_size]_
-Request a file from the client
+Запрос файла с клиента
 
-Parameter            | Description
+Параметр             | Описание
                  --- | ---
-**site**             | Site address (example: 1EU1tbG9oC1A8jz2ouVwGZyQ5asrNsE4Vr)
-**inner_path**       | File path relative to site directory
-**location**         | Request file from this byte (max 512 bytes got sent in a request, so you need multiple requests for larger files)
-**file_size**        | Total size of the requested file (optional)
+**site**             | Адрес сайта (например: 1EU1tbG9oC1A8jz2ouVwGZyQ5asrNsE4Vr)
+**inner_path**       | Путь к файлу относительно каталога сайта
+**location**         | Запрос файла с этого байта (max 512 байт посылается при запросе, поэтому Вам надо сделать множество запросов для получения большого файла)
+**file_size**        | Общий размер запрашиваемого файла (опционально)
 
-**Return**:
+**Ответ**:
 
-Return key           | Description
+Возвращаемый ключ    | Описание
                  --- | ---
-**body**             | The requested file content
-**location**         | The location of the last byte sent
-**size**             | Total size of the file
+**body**             | Содержимое запрошенного файла
+**location**         | Расположение последнего переданного байта
+**size**             | Общий размер файла
 
 
 ---
 
 #### streamFile _site_, _inner_path_, _location_, _[file_size]_
-Stream a file from the client
+Поток файла с клиента
 
-**Return**:
+**Ответ**:
 
-Return key           | Description
-                 --- | ---
-**stream_bytes**    | The length of file data after the MessagePack payload
+Возвращаемый ключ   | Описание
+                --- | ---
+**stream_bytes**    | Длина файла после MessagePack
 
-To avoid having python-msgpack serialize large binary strings, the file body is appended directly after the MessagePack payload. For example,
+Чтобы избежать сериализации больших бинарных строк python-msgpack, тело файла присоединяется непосредственно после MessagePack. Например,
 
 ```
 > {"cmd": "streamFile", "id": 1, "inner_path": "content.json", "size": 1234}
 < {"cmd": "response", "to": 1, "stream_bytes": 1234}
-< content of the file
+< содержимое файла
 ```
 
-> ZeroNet implementation detail: For file segments larger than 256 kb, streaming is enabled by default.
+> Детали реализации в ZeroNet: Для сегментов файла, больших 256 кБ, стриминг выполняется по умолчанию.
 
 ---
 
 
 #### ping
-Checks if the client is still alive
+Проверка, что клмент ещё жив
 
-**Return**:
+**Ответ**:
 
-Return key           | Description
+Возвращаемый ключ    | Описание
                  --- | ---
 **body**             | Pong
 
@@ -145,75 +145,75 @@ Return key           | Description
 
 
 #### pex _site_, _peers_, _need_
-Exchange peers with the client.
-Peers packed to 6 bytes (4byte IP using inet_ntoa + 2byte for port)
+Обмен пирами с клиентом.
+Данные пира упаковываются в 6 байт (4 байта для IP с помощью inet_ntoa + 2 байта для порта)
 
-Parameter            | Description
+Параметр             | Описание
                  --- | ---
-**site**             | Site address (example: 1EU1tbG9oC1A8jz2ouVwGZyQ5asrNsE4Vr)
-**peers**            | List of peers that the requester has (packed)
-**peers_onion**      | List of Tor Onion peers that the requester has (packed)
-**need**             | Number of peers the requester want
+**site**             | Адрес сайта (например: 1EU1tbG9oC1A8jz2ouVwGZyQ5asrNsE4Vr)
+**peers**            | Список пиров известных запрашивающему (упакованный)
+**peers_onion**      | Список пиров Tor Onion известных запрашивающему (упакованный)
+**need**             | Количество пиров, сколько хочется получить
 
-**Return**:
+**Ответ**:
 
-Return key           | Description
-                 --- | ---
-**peers**           | List of IPv4 peers he has for the site (packed)
-**peers_onion**     | List of Tor Onion peers for this site (packed)
+Возвращаемые ключи  | Description
+                --- | ---
+**peers**           | Список IPv4 пиров для этого сайта (упакованный)
+**peers_onion**     | Список Tor Onion пиров для этого сайта (упакованный)
 
-Each element in the `peers` list is a packed IPv4 address.
+Каждый элемент в списке `peers` - это упакованный IPv4 адрес.
 
-IP address | Port
----------- | ----
-`4 bytes` | `2 bytes`
+IP адрес  | Порт
+--------- | ----
+`4 байта` | `2 байта`
 
-Each element in the `peers_onion` list is a packed Tor Onion Service address.
+Каждый элемент в списке `peers_onion`  - это упакованный адрес сети Tor Onion.
 
-B32-decoded onion address | Port
+Onion адрес закодированный B32 | Порт
 ------------------------- | ----
 `binary_str[0:-2]`        | `binary_str[-2:]`
 
-To restore the onion address, pass the first part through `base64.b32encode` and append `.onion` to the return value.
+Для восстановления адреса onion пропустите первую часть через `base64.b32encode` и добавьте `.onion` к полученному значению.
 
 ---
 
 #### update _site_, _inner_path_, _body_, _[diffs]_
-Update a site file.
+Обновление файла сайта.
 
 
-Parameter            | Description
+Параметр             | Описание
                  --- | ---
-**site**             | Site address (example: 1EU1tbG9oC1A8jz2ouVwGZyQ5asrNsE4Vr)
-**inner_path**       | File path relative to site directory
-**body**             | Full content of the updated content.json
-**diffs** (optional) | [Diff opcodes](#possible-diff-opcodes) for the modified files in the content.json
+**site**             | Адрес сайта (например: 1EU1tbG9oC1A8jz2ouVwGZyQ5asrNsE4Vr)
+**inner_path**       | Путь к файлу относительно каталога сайта
+**body**             | Полное содержимое обновлённого content.json
+**diffs** (опционально) | [Опкоды различий](#possible-diff-opcodes) для изменённых файлов в content.json
 
-**Return**:
+**Ответ**:
 
-Return key           | Description
+Возвращаемый ключ    | Описание
                  --- | ---
-**ok**               | Thanks message on successful update :)
+**ok**               | Благодарность при успешном обновлении :)
 
-##### Diffs format
+##### Формат различий
 
-A dict that contains the modifications
+Словарь, содержащий изменения
 
- - Key: changed file's relative path to content.json (eg.: `data.json`)
- - Value: The list of diff opcodes for the file (eg.: `[['=', 5], ['+', '\nhello new line'], ['-', 6]]`)
+ - Ключ: путь к изменённому файлу относительно content.json (напр.: `data.json`)
+ - Значение: Список опкодов различий для файла (напр.: `[['=', 5], ['+', '\nhello new line'], ['-', 6]]`)
 
 ##### Possible diff opcodes:
 
-Opcode                                   | Description
+Опкод                                    | Описание
                                      --- | ---
-**['=', number of same characters]**     | Have not changed part of the file (eg.: `['=', 5]`)
-**['+', new text]**                      | Added characters (eg.: `['+', '\nhello new line']`)
-**['-', number of removed characters]**  | Full content of the updated file (eg.: `['-', 6]`)
+**['=', число таких же символов]**       | Часть файла без изменений (напр.: `['=', 5]`)
+**['+', новый текст]**                   | Добавленые символы (напр.: `['+', '\nhello new line']`)
+**['-', число удалённых символов]**      | Полное содержание обновлённого файла (напр.: `['-', 6]`)
 
-After the update received, the client tries to patch the files using the diffs.
-If it failes to match the sha hash provided by the content.json (had different version of the file) it automatically re-downloads the whole file from the sender of the update.
+Когда обновления приняты, клиент пытается восстановить файл использую список изменений.
+Если есть различия при сравнении хэша sha с хэшем в content.json (версии файлов различны), он автоматически загружает файл полностью с источника обновлений.
 
-> __Note:__ The patches are limited to 30KB per file and only used for .json files
+> __Кстати:__ Такие патчи ограничены до 30 кБ на файл и применяются только для файлов типа .json
 
 ---
 
