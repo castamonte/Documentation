@@ -1,78 +1,77 @@
-# Certificate Authority
+# Центр сертификации
 
-An account without password? A certificate for me? You realize the ID system of ZeroNet does not conform to convention. In this section, you are going to learn about how user certificate and certificate authority work in ZeroNet.
+Учётная запись без пароля? Сертификат для меня? Вы представляете, что Zeronet не соответствует соглашениям. В этом разделе Вы узнаете как работают сертификаты пользователей и центр сертификации в Zeronet.
 
-## What does a certificate authority do?
+## Что делает центр сертификации
 
-In ZeroNet, everything is signed by Bitcoin signing keys. A certificate provides a unique and memorizable name for a Bitcoin address. A certificate authority (or an ID provider) is responsible for proving the relationship between a unique friendly name and a Bitcoin address.
+В ZeroNet всё подписано ключами биткойн. Сертификат обеспечивает уникальное и запоминающееся имя для адреса биткойн. Центр сертификации (или провайдер ID) ответственен за доказательство соответствия между уникальным именем и адресом биткойн.
 
-## Certificate format
+## Формат сертификата
 
-### Body
+### Тело
 
-The body of a certificate contains a Bitcoin address, a portal type, and a memorizable user name.
+Тело сертификата содержит адрес биткойн, тип портала и запоминающееся имя пользователя.
 
 ```
 [BitcoinAddress]#[PortalType]/[UserName]
 ```
 
-**Example:**
+**Пример:**
 
 ```
 1H28iygiKXe3GUMcD77HiifVqtf3858Aft#web/hellozeronet
 ```
 
-- Bitcoin address: `1H28iygiKXe3GUMcD77HiifVqtf3858Aft`
-- Portal type: `web`
-- User name: `hellozeronet`
+- Адрес Bitcoin: `1H28iygiKXe3GUMcD77HiifVqtf3858Aft`
+- Тип портала: `web`
+- Имя пользователя: `hellozeronet`
 
-**General rules:**
+**Основные правила:**
 
-The Bitcoin address, the portal type and the user name **must not** contain the character `#`, `@` or `/`
+Адрес Bitcoin, тип портала и имя пользователя **не должны** содержать символы `#`, `@` или `/`
 
-Only 0-9 and a-z are allowed in a user name. All English letters in a user name **must** be in lower case. Characters not in the allowed set **must not** be used as parts of a user name. A user name **should not** be too long. A user name **should** be legible and **should not** interfere with user interface rendering.
+Только 0-9 и a-z допустимы в имени пользователя. Все английские буквы в имени пользователя должны быть в нижнем регистре. Имя пользователя **не должно** быть слишком длинным. Имя пользователя **должно** быть разборчивым и **не должно** мешать отображению пользовательского интерфейса.
 
-A user name **must** be unique in the pool of all registered user names.
+Имя пользователя **должно** быть уникальным в множестве всех зарегистрированных имён пользователей.
 
-### Signature
+### Подпись
 
-A certificate signing algorithm loads a secret signing key and generates a deterministic Bitcoin signature for the body.
+Алгоритм подписи сертификата загружает секретный ключ подписи генерирует детерминированную биткойн-подпись для тела сертификата.
 
-**From the source code:**
+**Из исходных текстов:**
 
 ```python
 sign = os.popen("python zeronet.py --debug cryptSign %s#bitmsg/%s %s 2>&1" % (auth_address, user_name, config.site_privatekey)).readlines()[-1].strip()
 ```
 
-### Certificate
+### Сертификат
 
-By looking at the source code of ZeroID, we know how a certificate is stored in its public database.
+Глядя в исходные коды ZeroID, мы знаем как сертификат хранится в его публичной базе данных.
 
 ```python
 data["users"][user_name] = "bitmsg,%s,%s" % (auth_address, sign)
 ```
 
-**Example:**
+**Пример:**
 
 ```
 "hellozeronet": "web,1H28iygiKXe3GUMcD77HiifVqtf3858Aft,HA2A+iKekECD3hasrsN8IrR86BnXQ63kPH+9A85JLO9hLUpRJTBn62UfnuuF92B9CIc6+EewAIqzIn9UoVq2LPA="
 ```
+Сертификат может быть сохранён в различных форматах. Тем не менее, все форматы должны содержать:
 
-A certificate can be stored in various formats. However, all formats must include:
+- Адрес Bitcoin: `1H28iygiKXe3GUMcD77HiifVqtf3858Aft`
+- Тип портала: `web`
+- Имя пользователя: `hellozeronet`
+- Подпись центра сертификации: `HA2A+iKekECD3hasrsN8IrR86BnXQ63kPH+9A85JLO9hLUpRJTBn62UfnuuF92B9CIc6+EewAIqzIn9UoVq2LPA=`
 
-- The Bitcoin address: `1H28iygiKXe3GUMcD77HiifVqtf3858Aft`
-- The portal type: `web`
-- The user name: `hellozeronet`
-- The signature from authority: `HA2A+iKekECD3hasrsN8IrR86BnXQ63kPH+9A85JLO9hLUpRJTBn62UfnuuF92B9CIc6+EewAIqzIn9UoVq2LPA=`
+## Использование в `content.json`
 
-## Usage in `content.json`
+Владелец сайта может выбирать, каким центрам сертификации доверять.
 
-Site owners can choose which certificate authorities to trust.
+Blue Hub, например, принимает сертификаты, подписанные ZeroID. Это правило определено в его `data/users/content.json`
 
-The Blue Hub, for example, accepts certificates signed by ZeroID. This rule is defined in its `data/users/content.json`
-
-- The ID provider has a friendly name: `zeroid.bit`
-- The public key digest of the ID provider is: `1iD5ZQJMNXu43w1qLB8sfdHVKppVMduGz`
+- Читаемое имя провайдера ID: `zeroid.bit`
+- Отпечаток открытого ключа провайдера ID: `1iD5ZQJMNXu43w1qLB8sfdHVKppVMduGz`
 
 ```json
 "user_contents": {
@@ -84,7 +83,7 @@ The Blue Hub, for example, accepts certificates signed by ZeroID. This rule is d
 }
 ```
 
-Every user presents his certificate in the manifest file in his Bitcoin folder. For example, `data/users/1J3rJ8ecnwH2EPYa6MrgZttBNc61ACFiCj/content.json` says:
+Каждый пользователь предоставляет свой сертификат в файле манифеста в своём каталоге Bitcoin. Например, `data/users/1J3rJ8ecnwH2EPYa6MrgZttBNc61ACFiCj/content.json` содержит:
 
 ```json
 {
@@ -106,43 +105,44 @@ Every user presents his certificate in the manifest file in his Bitcoin folder. 
 }
 ```
 
-Site specific:
+Относится к сайту:
 
-- Expected site URL: `"address": "1BLueGvui1GdbtsjcKqCf4F67uKfritG49"`
-- Expected file path: `"inner_path": "data/users/1J3rJ8ecnwH2EPYa6MrgZttBNc61ACFiCj/content.json"`
+- Ожидаемый URL сайта: `"address": "1BLueGvui1GdbtsjcKqCf4F67uKfritG49"`
+- Ожидаемый путь файла: `"inner_path": "data/users/1J3rJ8ecnwH2EPYa6MrgZttBNc61ACFiCj/content.json"`
 
+Информация сертификата:
 Certificate information:
 
-- ID provider: `zeroid.bit`
-- User name: `nofish`
-- User Bitcoin address: `1J3rJ8ecnwH2EPYa6MrgZttBNc61ACFiCj`
-- Portal type: `web`
-- Signature from ID provider: `HPiZsWEJ5eLnspUj8nQ75WXbSanLz0YhQf5KJDq+4bWe6wNW98Vv9PXNyPDNu2VX4bCEXhRC65pS3CM7cOrjjik=`
+- Провайдер ID: `zeroid.bit`
+- Имя пользователя: `nofish`
+- Bitcoin адрес пользователя: `1J3rJ8ecnwH2EPYa6MrgZttBNc61ACFiCj`
+- Тип портала: `web`
+- Подпись провайдера ID: `HPiZsWEJ5eLnspUj8nQ75WXbSanLz0YhQf5KJDq+4bWe6wNW98Vv9PXNyPDNu2VX4bCEXhRC65pS3CM7cOrjjik=`
 
-### The verifying process
+### Процесс проверки
 
-1. The verifying algorithm reads `data/users/content.json` to determine what is the expected site for the user content.
+1. Алгоритм проверки читает `data/users/content.json` чтобы определить нужный сайт для контента пользователя.
 
-2. The verifying algorithm reads `data/users/content.json` to look up the public key digest of the ID provider.
+2. Алгоритм проверки читает `data/users/content.json` чтобы найти отпечаток публичного ключа провайдера ID.
 
-3. Given a user Bitcoin address, a portal type and a user name, the verifying algorithm reconstructs the body of the certificate.
+3. Получив биткойн-адрес, тип портала и имя пользователя, алгоритм проверки восстанавливает тело сертификата.
 
-4. The verifying algorithm checks the signature from the ID provider, with the public key defined in `data/users/content.json`, to ensure the authenticity of the certificate body.
+4. Алгоритм проверки проверяет подпись провайдера ID с публичным ключом определённым в `data/users/content.json`, чтобы гарантировать подлинность тела сертификата.
 
-5. The verifying algorithm loads the user public key and checks the authenticity of the user content.
+5. Алгоритм проверки загружает публичный ключ пользователя и проверяет подлинность пользовательского контанта.
 
-## Features and limitations of certificate authorities
+## Функции и ограничения центров сертификации
 
-- A certificate authority provides memorizable names for user public key digests. It also helps mitigate spam and unsolicited content.
+- Центр сертификации предоставляет запоминающиеся имена для отпечатков пользовательских публичных ключей. Это также помогает уменьшить спам и нежелательный контент.
 
-- A user does not have to give away secret information such as passwords. In addition, a user only has to authenticate once.
+- Пользователь не должен выдавать секретную информацию, такую как пароли. К тому же, пользователь должен аутентифицироваться только единожды.
 
-- A certificate authority does not have to be approved by any ZeroNet developers. A site owner can choose which certificate authorities to trust for the sake of user content quality.
+- Центр сертификации не должен быть одобрен разработчиками ZeroNet. Владелец сайта может выбирать какому центру сертификации доверять ради качества пользовательского контента.
 
-- A certificate authority is responsible for maintaining its user name pool.
+- Центр сертификации ответственен за поддержку пула своих пользователей.
 
-- ZeroID does not revoke or renew certificates.
+- ZeroID не отзывает и не обновляет сертификаты.
 
-## Can I live without certificate authorities?
+## Могу я жить без центров сертификации?
 
-Generally, a certificate is required when you add things to someone else's site. You do not need a certificate when you are modifying your own site.
+В основном сертификаты требуются, когда Вы добавляете что-либо на чей-то сайт. Вам не нужен сертификат для изменения собственного сайта.
