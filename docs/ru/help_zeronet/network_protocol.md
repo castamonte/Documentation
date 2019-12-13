@@ -202,7 +202,7 @@ Onion адрес закодированный B32 | Порт
  - Ключ: путь к изменённому файлу относительно content.json (напр.: `data.json`)
  - Значение: Список опкодов различий для файла (напр.: `[['=', 5], ['+', '\nhello new line'], ['-', 6]]`)
 
-##### Possible diff opcodes:
+##### Возможные опкоды различий:
 
 Опкод                                    | Описание
                                      --- | ---
@@ -218,21 +218,21 @@ Onion адрес закодированный B32 | Порт
 ---
 
 #### listModified _site_, _since_
-Lists the content.json files modified since the given parameter. It used to fetch the site's user submitted content.
+Список файлов content.json, изменённых после указанного времени. Используется для получения контанта, изменённого пользователями сайта.
 
 
-Parameter            | Description
+Параметр             | Описание
                  --- | ---
-**site**             | Site address (example: 1EU1tbG9oC1A8jz2ouVwGZyQ5asrNsE4Vr)
-**since**            | List content.json files since this timestamp.
+**site**             | Адрес сайта (например: 1EU1tbG9oC1A8jz2ouVwGZyQ5asrNsE4Vr)
+**since**            | Время, после которого изменялись content.json
 
-**Return**:
+**Ответ**:
 
-Return key           | Description
+Возвращаемый ключ    | Описание
                  --- | ---
-**modified_files**   | Key: content.json inner_path<br>Value: last modification date
+**modified_files**   | Ключ: content.json inner_path<br>Значение: Время последнего изменения
 
-**Example**:
+**Пример**:
 
 ```json
 > zeronet.py --silent peerCmd 127.0.0.1 15441 listModified "{'site': '1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8', 'since': 1497507030}"
@@ -269,19 +269,19 @@ Return key           | Description
 
 
 #### getHashfield _site_
-Get the client's downloaded [optional file ids](#optional-file-id).
+Получить скачанные клиентом [id опциональных файлов](#optional-file-id).
 
-Parameter            | Description
+Параметр             | Описание
                  --- | ---
-**site**             | Site address (example: 1EU1tbG9oC1A8jz2ouVwGZyQ5asrNsE4Vr)
+**site**             | Адрес сайта (например: 1EU1tbG9oC1A8jz2ouVwGZyQ5asrNsE4Vr)
 
-**Return**:
+**Ответ**:
 
-Return key           | Description
+Возвращаемый ключ    | Описание
                  --- | ---
-**hashfield_raw**    | Optional file ids encoded using `array.array("H", [1000, 1001..]).tostring()`
+**hashfield_raw**    | ID опциональных файлов, закодированные с помощью `array.array("H", [1000, 1001..]).tostring()`
 
-**Example**:
+**Пример**:
 ```json
 > zeronet.py --silent peerCmd 192.168.1.13 15441 getHashfield "{'site': '1Gif7PqWTzVWDQ42Mo7np3zXmGAo3DXc7h'}
 {
@@ -295,39 +295,40 @@ Return key           | Description
 
 
 #### setHashfield _site_, _hashfield_raw_
-Set the list of [optional file ids](#optional-file-id) that the requester client has.
+Устанавливает список [id опциональных файлов](#optional-file-id), которые имеет запрашивающий клиент.
 
-Parameter            | Description
+Параметр             | Описание
                  --- | ---
-**site**             | Site address (example: 1EU1tbG9oC1A8jz2ouVwGZyQ5asrNsE4Vr)
-**hashfield_raw**    | Optional file ids encoded using `array.array("H", [1000, 1001..]).tostring()`
+**site**             | Адрес сайта (например: 1EU1tbG9oC1A8jz2ouVwGZyQ5asrNsE4Vr)
+**hashfield_raw**    | ID опциональных файлов, закодированные с помощью `array.array("H", [1000, 1001..]).tostring()`
 
-**Return**:
+**Ответ**:
 
-Return key           | Description
+Возвращаемый ключ    | Описание
                  --- | ---
-**ok**               | Updated
+**ok**               | Обновлён
 
 
 ---
 
 
 #### findHashIds _site_, _hash_ids_
+Запрашивает, знает ли клиент пира с необходимыми id опциональных файлов
 Queries if the client know any peer that has the requested hash_ids
 
-Parameter            | Description
+Параметр             | Описание
                  --- | ---
-**site**             | Site address (example: 1EU1tbG9oC1A8jz2ouVwGZyQ5asrNsE4Vr)
-**hash_ids**         | List of optional file ids the client currently looking for
+**site**             | Адрес сайта (например: 1EU1tbG9oC1A8jz2ouVwGZyQ5asrNsE4Vr)
+**hash_ids**         | Список id разыскиваемых опциональных файлов
 
-**Return**:
+**Ответ**:
 
-Return key           | Description
+Возвращаемый ключ    | Описание
                  --- | ---
-**peers**            | Key: Optional file id<br>Value: List of ipv4 peers encoded using `socket.inet_aton(ip) + struct.pack("H", port)`
-**peers_onion**      | Key: Optional file id<br>Value: List of onion peers encoded using `base64.b32decode(onion.replace(".onion", "").upper()) + struct.pack("H", port)`
+**peers**            | Ключ: Id опционального файла<br>Значение: Список ipv4 пиров, закодированных `socket.inet_aton(ip) + struct.pack("H", port)`
+**peers_onion**      | Ключ: Id опционального файла<br>Значение: Список onion пиров, закодированных `base64.b32decode(onion.replace(".onion", "").upper()) + struct.pack("H", port)`
 
-**Example**:
+**Пример**:
 ```json
 > zeronet.py --silent peerCmd 192.168.1.13 15441 findHashIds "{'site': '1Gif7PqWTzVWDQ42Mo7np3zXmGAo3DXc7h', 'hash_ids': [59948, 29811]}"
 {
@@ -355,8 +356,8 @@ Return key           | Description
 }
 ```
 
-##### Optional file id
-Integer representation of the first 4 character of the hash:
+##### Id опционального файла
+Числовое представление первых 5 символов хэша:
 ```
 >>> int("ea2c2acb30bd5e1249021976536574dd3f0fd83340e023bb4e78d0d818adf30a"[0:4], 16)
 59948
@@ -365,84 +366,84 @@ Integer representation of the first 4 character of the hash:
 ---
 
 #### checkport _port_
-Check requested port of the other peer.
+Проверяет запрашиваемый порт другого пира.
 
 
-Parameter            | Description
+Параметр             | Описание
                  --- | ---
-**port**             | Port which will be checked.
+**port**             | Проверяемый порт.
 
-**Return**:
+**Ответ**:
 
-Return key           | Description
+Возвращаемый ключ    | Описание
                  --- | ---
-**status**           | Status of the port ("open" or "closed")
-**ip_external**      | External IP of the requestor
+**status**           | Статус порта ("open" или "closed")
+**ip_external**      | Внешний IP запрашивающего
 
 ---
 
-# Bigfile Plugin
+# Плагин Bigfile
 
 #### getPieceFields _site_
 
-Returns all big file [piecefield](#bigfile-piecefield) that client has for that site in a dict.
+Возвращает все [piecefield](#bigfile-piecefield) большого файла, которые клиент имеет в словаре для этого сайта.
 
-Parameter            | Description
+Параметр             | Описание
                  --- | ---
-**site**             | Requested site
+**site**             | Запрашиваемый сайт
 
 
-**Return**:
+**Ответ**:
 
-Return key             | Description
+Возвращаемый ключ      | Описание
                    --- | ---
-**piecefields_packed** | Key: Bigfile's sha512/256 [merkle root hash](#bigfile-merkle-root)<br>Value: Packed [piecefield](#bigfile-piecefield)
+**piecefields_packed** | Ключ: sha512/256 большого файла [merkle root hash](#bigfile-merkle-root)<br>Значение: Упакованный [piecefield](#bigfile-piecefield)
 
 ---
 
 #### setPieceFields _site_, _piecefields_packed_
 
-Set the client's [piecefields](#picefield) for that site.
+Устанавливает клиентский [piecefields](#picefield) для данного сайта.
 
-Parameter              | Description
+Параметр               | Описание
                    --- | ---
-**site**               | Requested site
-**piecefields_packed** | Key: Bigfile's sha512/256 [merkle root hash](#bigfile-merkle-root)<br>Value: Packed [piecefield](#bigfile-piecefield)
+**site**               | Запрашиваемый сайт
+**piecefields_packed** | Ключ: sha512/256 большого файла [merkle root hash](#bigfile-merkle-root)<br>Значение: Упакованный [piecefield](#bigfile-piecefield)
 
 
-**Return**:
+**Ответ**:
 
-Return key           | Description
+Возвращаемый ключ    | Описание
                  --- | ---
-**ok**               | Updated
+**ok**               | Выполнено
 
 
 ##### Bigfile piecefield
 
-Holds the big files downloaded pieces information in a simple string with 1/0 values. (1 = Downloaded, 0 = Not downloaded)
+Содержит информацию о скачанных кусках большого файла в простой строке значений 0 и 1. (1 = скачан, 0 = не скачан)
 
-> __Example__: `1110000001` means the file is sized 9-10MB and the client downloaded the first 3MB and the last 1MB at 1MB piecesize.
+> __Пример__: `1110000001` означает файл размером 9..10 МБ и клиент скачал первые 3 МБ и последний 1 МБ кусками по 1 МБ.
 
-**Packed format**:
+**Формат упаковки**:
 
-Turns the string to an list of int by counting the repeating characters starting with `1`.
+Преобразует строку в список целых значений счётчиков повторяющихся символов начиная с `1`.
 
-> __Example__: `1110000001` to `[3, 6, 1]`, `0000000001` to `[0, 9, 1]`, `1111111111` to `[10]`
+> __Пример__: `1110000001` в `[3, 6, 1]`, `0000000001` в `[0, 9, 1]`, `1111111111` в `[10]`
 
-After the conversion it turns it to more efficient [typed array](https://docs.python.org/2/library/array.html) using `array.array('H', piecefield)`
+После преобразования возвращается более эффективный [типизированный массив](https://docs.python.org/2/library/array.html) с помощью `array.array('H', piecefield)`
 
 ##### Bigfile merkle root
 
-During the big file hashing procedure, in addition to storing the per-piece sha512/256 hash digests in the [piecemap](#bigfile-piecemap) file, the algorithm also calculates the SHA-512/256 merkle root of the file using the [merkle-tools](https://github.com/tierion/merkle-tools) implementation.
-The merkle root is only used as an ID to identify the big file, not (yet) for verifying the pieces.
+Во время процедуры хэширования большого файла в дополнению к sha512/256 хэшам кусков в файле [piecemap](#bigfile-piecemap), алгоритм также вычисляет SHA-512/256 merkle root файла с помощью [merkle-tools](https://github.com/tierion/merkle-tools).
+merkle root используется только для идентификации большого файла, не для верификации кусков (пока).
 
-> __Note__: The merkle root is chosen to identify the file, instead of the file's actual SHA-512/256 hash. Obviously, using the latter results in hashing the same file twice. (once for piecemap once for the whole file)
+> __Кстати__: merkle root выбран для идентификации файла, а не актуальный его SHA-512/256 хэш. Очевидно, что использование последнего приводит к повторному хэшированию файла (один раз для piecemap и один раз для файла целиком).
 
-> __Note__: The merkle root is not used to verify the integrity of the pieces or the big file, because doing so would take more bandwidth and space to transfer and store the merkle-proofs for partial verification, than the per-piece hash map file itself.
+> __Кстати__: merkle root не используется для верификации целостности кусков или всего большого файла, поскольку может привести к увеличению используемой полосы пропускания и объёма при передаче и хранении merkle-proofs при частичной верификации, чем сам файл хэш-карты.
 
 ##### Bigfile piecemap
 
-It holds the per-piece SHA-512/256 hashes. The piece size and the picemap filename is defined in `content.json`, eg.:
+Содержит SHA-512/256 хэши кусков файла. Размер кусков и имя файла piecemap определяется в `content.json`, напр.:
 
 ```
 ...
@@ -456,7 +457,7 @@ It holds the per-piece SHA-512/256 hashes. The piece size and the picemap filena
 ...
 ```
 
-Having the following data structure, the piecemap file is packed into the [msgpack](https://msgpack.org/) format:
+Имеет следующую структуру данных, файл piecemap упакован в формат [msgpack](https://msgpack.org/):
 
 ```
 {
