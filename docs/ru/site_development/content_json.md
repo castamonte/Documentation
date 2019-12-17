@@ -1,23 +1,23 @@
-# Structure of content.json
+# Структура content.json
 
-Every ZeroNet site has a `content.json` file. ([Example content.json file](https://github.com/HelloZeroNet/ZeroTalk/blob/master/content.json))
+Каждый ZeroNet сайт имеет файл `content.json`. ([Пример файла content.json](https://github.com/HelloZeroNet/ZeroTalk/blob/master/content.json))
 
-This file will carry, among other things, a list of all files on your site and a signature created with your private key. This is used to ensure authenticity of site files and avoid tampering (ie: only you, or people you trust, can update your site's content).
+В этом файле, помимо прочего, содержится список всех файлов Вашего сайта и подписи, созданные Вашим приватным ключом. Это сделано, чтобы аутентифицировать файлы сайта и избежать подделки (напр. только Вы или люди, которым Вы доверяете, могут изменять контент Вашего сайта).
 
-Here is a list of supported `content.json` keys:
+Вот список ключевых слов, поддерживаемых `content.json`:
 
 
 ---
 
-## Generated automatically
+## Генерируются автоматически
 
-_These keys are added automatically when the site is created or cloned._
+_Эти ключи генерируются автоматически при создании или клонировании сайта._
 
 ### address
 
-Your site address
+Адрес Вашего сайта
 
-**Example**: 1TaLk3zM7ZRskJvrh3ZNCDVGXvkJusPKQ
+**Пример**: 1TaLk3zM7ZRskJvrh3ZNCDVGXvkJusPKQ
 
 
 ---
@@ -25,27 +25,27 @@ Your site address
 
 ### address_index
 
-The site address's BIP32 sub-key index of your BIP32 seed. Auto-added when you clone a site. It allows recovery of the site's privatekey from your BIP32 seed.
+BIP32 индекс подключа от Вашего начального числа BIP32 для адреса сайта. Добавляется автоматически, когда Вы клонируете сайт. Позволяет восстановить приватный ключ сайта по Вашему начальному числу BIP32.
 
-**Example**: 30926910
+**Пример**: 30926910
 
 ---
 
 
 ### cloned_from
 
-Only for cloned sites. The site address where the site is cloned from.
+Только для клонированных сайтов. Адрес сайта, который был склонирован.
 
-**Example**: 1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8
+**Пример**: 1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8
 
 ---
 
 
 ### clone_root
 
-Only for cloned sites. The sub-directory on the site which this was cloned from.
+Только для клонированных сайтов. Поддиректория сайта, с которой сайт был склонирован.
 
-**Example**: template-new
+**Пример**: template-new
 
 
 ---
@@ -53,9 +53,9 @@ Only for cloned sites. The sub-directory on the site which this was cloned from.
 
 ### files
 
-Size and sha512 hashes of automatically downloaded files contained in your site. Automatically added by the command `zeronet.py siteSign siteaddress privatekey`.
+Размеры и sha512 хэши автоматически загружаемых файлов Вашего сайта. Автоматически добавляются по команде `zeronet.py siteSign siteaddress privatekey`.
 
-**Example**:
+**Пример**:
 ```python
     "css/all.css": {
       "sha512": "869b09328f07bac538c313c4702baa5276544346418378199fa5cef644c139e8",
@@ -69,9 +69,9 @@ Size and sha512 hashes of automatically downloaded files contained in your site.
 
 ### files_optional
 
-Size and sha512 hashes of optional files contained in your site. Automatically added by the command `zeronet.py siteSign siteaddress privatekey`.
+Размеры и sha512 хэши опциональных файлов Вашего сайта. Автоматически добавляются по команде `zeronet.py siteSign siteaddress privatekey`.
 
-**Example**:
+**Пример**:
 ```python
     "data/myvideo.mp4": {
       "sha512": "538c09328aa52765443464135cef644c144346418378199fa5cef61837819538",
@@ -86,19 +86,19 @@ Size and sha512 hashes of optional files contained in your site. Automatically a
 
 ### modified
 
-Time when the content.json was generated.
+Время создания content.json.
 
-**Example**: 1425857522.076
+**Пример**: 1425857522.076
 
 
 ---
 
 
-### sign (deprecated)
+### sign (устарело)
 
-ECDSA sign of the content.json file content. (keys sorted, without whitespace and the `sign` and `signers_sign` nodes). For backward compatibility, will be removed soon.
+ECDSA подпись содержимого content.json. (отсортированы по ключу, без пробелов и узлов `sign` и `signers_sign`). Для обратной совместимости, скоро будет удалено.
 
-**Example**:
+**Пример**:
 ```python
   "sign": [
     43117356513690007125104018825100786623580298637039067305407092800990252156956,
@@ -112,39 +112,39 @@ ECDSA sign of the content.json file content. (keys sorted, without whitespace an
 
 ### signers_sign
 
-Possible signer addresses for the root content.json signed using the site address private key. Multiple entries are allowed here, allowing for site Multisig functionality.
+Адреса возможных подписывающих основной content.json, подписанные приватным ключом сайта. Здесь возможны множественные включения, что позволяет использовать мультиподписи.
 
-**Format of the signed string**: [number_of_signers_required]:[signer address],[signer address]
+**Формат строки подписывающих**: [требуемое_количество_подписавших]:[адрес подписывающего],[адрес подписывающего]
 
-*Example*:
+*Пример*:
 ```
 signs_required: 1:1PcxwuHYxuJEmM4ydtB1vbiAY6WkNgsz9G,1CK6KHY6MHgYvmRQ4PAafKYDrg1ejbH1cE
 signers_sign: MEUCIQDuz+CzOVvFkv1P2ra9i5E1p1G0/1cOGecm7GpLpMLhuwIgBIbCL0YHXD1S2+x48QS5VO/rISrkdLiUR+o+x1X0y1A=
 ```
 
-The above signed message is signed using the address "1PcxwuHYxuJEmM4ydtB1vbiAY6WkNgsz9G".
+Подписанное сообщение выше подписано с помоью адреса "1PcxwuHYxuJEmM4ydtB1vbiAY6WkNgsz9G".
 
 ---
 
 
 ### signs
 
-ECDSA signature for the content.json file content:
+ECDSA подпись содержимого файла content.json:
 
- - `sign`, `signs` JSON nodes removed
- - JSON dumped with keys sorted alphabetically, without whitespace
- - Signature generated on the dumped data, using Electrum Bitcoin message signature format:
-    * [Message encoding](https://github.com/vbuterin/pybitcointools/blob/87806f3c984e258a5f30814a089b5c29cbcf0952/bitcoin/main.py#L405): `sha256("\x18" || "Bitcoin Signed Message:\n" || num_to_var_int(len(message)) || message)`
-    * [Serialization format](https://github.com/MuxZeroNet/zerolib/blob/f13126e04bf99b1b416a7ea5b5cad7924cdc15a4/zerolib/integrity/bitcoin.py#L82-L93): `recovery_id || r || s`, where 27 ≤ recovery_id ≤ 30; signature length = 1 + 32 + 32 = 65 bytes.
-    * Double vertical bar `||` denotes byte concatenation.
+ - удаляются узлы JSON `sign` и `signs`
+ - делается дамп JSON с сортировкой ключей по алфавиту, без пробелов
+ - дамп подписывается с использованием формата подписи сообщений Electrum Bitcoin:
+    * [Кодирование сообщения](https://github.com/vbuterin/pybitcointools/blob/87806f3c984e258a5f30814a089b5c29cbcf0952/bitcoin/main.py#L405): `sha256("\x18" || "Bitcoin Signed Message:\n" || num_to_var_int(len(message)) || message)`
+    * [Формат сериализации](https://github.com/MuxZeroNet/zerolib/blob/f13126e04bf99b1b416a7ea5b5cad7924cdc15a4/zerolib/integrity/bitcoin.py#L82-L93): `recovery_id || r || s`, где 27 ≤ recovery_id ≤ 30; длина подписи = 1 + 32 + 32 = 65 байт.
+    * Двойная вертикальная черта `||` означает конкатенацию байтов.
 
-**Example**:
+**Пример**:
 ```python
   "signs": {
     "1TaLk3zM7ZRskJvrh3ZNCDVGXvkJusPKQ": "G6/QXFKvACPQ7LhoZG4fgqmeOSK99vGM2arVWkm9pV/WPCfc2ulv6iuQnuzw4v5z82qWswcRq907VPdBsdb9VRo="
   },
 ```
-**Code example**
+**Пример кода**
 ```python
 import json
 import btctools
@@ -167,22 +167,22 @@ new_content["signs"][privatekey_address] = sign
 
 ### zeronet_version
 
-The ZeroNet version used to generate content.json file.
+Версия ZeroNet использованная для создания файла content.json.
 
-**Example**: 0.2.5
+**Пример**: 0.2.5
 
 ---
 
-## Optional Settings
+## Опциональные настройки
 
-_These options can be added if the functionality is needed._
+_Эти опции могут быть добавлены, если требуется указанная функциональность._
 
 
 ### background-color
 
-Background color of the wrapper
+Цвет бэкграунда враппера
 
-**Example**: #F5F5F5
+**Пример**: #F5F5F5
 
 
 ---
@@ -190,14 +190,13 @@ Background color of the wrapper
 
 ### cloneable
 
-Allow to clone the site if **true**.
+Позволяет клонировать сайт, если установлен в **true**.
 
 To make your site properly cloneable you have to have a separate folder of data
 files for a clean start (e.g. without any blog posts).  To do this you have to
 add the **-default** postfix to your data files and directories.  During the
 cloning process, only directories with the **-default** postfix are
 copied. The postfix is removed from the new site.
-
 
 
 ---
