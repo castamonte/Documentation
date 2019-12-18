@@ -192,11 +192,9 @@ _Эти опции могут быть добавлены, если требуе
 
 Позволяет клонировать сайт, если установлен в **true**.
 
-To make your site properly cloneable you have to have a separate folder of data
-files for a clean start (e.g. without any blog posts).  To do this you have to
-add the **-default** postfix to your data files and directories.  During the
-cloning process, only directories with the **-default** postfix are
-copied. The postfix is removed from the new site.
+Чтобы сделать Ваш сай правильно клонируемым, Вам надо иметь отдельный каталог с файлами данных для чистого старта (напр. без всяких постов блога).
+Для этого Вам надо добавить суффикс **-default** к Вашим файлам данных и каталогам.
+Во время клонирования будут скопированы только каталоги с суффиксом **-default** и в каталогах нового сайта суффикс будет удалён.
 
 
 ---
@@ -204,9 +202,9 @@ copied. The postfix is removed from the new site.
 
 ### description
 
-Description of your site, displayed under the site title on ZeroHello.
+Описание Вашего сайта, показывается после названия сайта в ZeroHello.
 
-**Example**: Decentralized forum demo
+**Пример**: Decentralized forum demo
 
 
 ---
@@ -214,9 +212,9 @@ Description of your site, displayed under the site title on ZeroHello.
 
 ### domain
 
-Namecoin domain name of your site. ZeroHello will link to this if the user has Zeroname plugin enabled.
+Доменное имя Namecoin Вашего сайта. ZeroHello будет связывать их, если у пользователя включён плагин Zeroname.
 
-**Example**: Blog.ZeroNetwork.bit
+**Пример**: Blog.ZeroNetwork.bit
 
 
 
@@ -226,20 +224,20 @@ Namecoin domain name of your site. ZeroHello will link to this if the user has Z
 
 ### ignore
 
-Do not sign files matching this pattern.
+Не подписывать файлы, соответствующие этому паттерну.
 
-**Example**: `((js|css)/(?!all.(js|css))|data/users/.*)` (ignore all js and css files except all.js and all.css and don't add anything from the `data/users/` directory)
+**Пример**: `((js|css)/(?!all.(js|css))|data/users/.*)` (игнорировать все js и css файлы, кроме all.js и all.css и игнорировать всё из каталога `data/users/`)
 
-Note: [Some restrictions](#regular-expression-limitations) apply to regular expressions.
+Кстати: [Некоторые ограничения](#regular-expression-limitations) налагаются на регулярные выражения.
 
 ---
 
 
 ### includes
 
-Include another content.json in the site. This is typically used for subsequent content.json files that are used to govern user data.
+Включает в сайт другой content.json. Это обычно используется для последующих файлов content.json, которые управляют данными пользователя.
 
-**Example**:
+**Пример**:
 
 ```python
 "includes": {
@@ -261,9 +259,9 @@ Include another content.json in the site. This is typically used for subsequent 
 
 ### merged_type
 
-The type of merger this site is a part of.
+Тип слияния, частью которого является этот сайт.
 
-**Example**: `ZeroMe`
+**Пример**: `ZeroMe`
 
 
 ---
@@ -271,21 +269,21 @@ The type of merger this site is a part of.
 
 ### optional
 
-Preg pattern of optional files.
+Паттерн опциональных файлов.
 
-**Example**: `(data/mp4/.*|updater/.*)` (everything in `data/mp4` and `updater` directory is optional)
+**Пример**: `(data/mp4/.*|updater/.*)` (всё в каталогах `data/mp4` и `updater` опционально)
 
-Note: [Some restrictions](#regular-expression-limitations) apply to regular expressions.
+Кстати: [Некоторые ограничения](#regular-expression-limitations) налагаются на регулярные выражения.
 
 ---
 
 
 ### signs_required
 
-The **number** of valid signs required to accept the file. Allows for Multisig functionality.
+**Количество** валидных подписей, требующихся для принятия файла. Позволяет использовать мультиподпись.
 
 
-**Example**: 1
+**Пример**: 1
 
 
 ---
@@ -293,9 +291,9 @@ The **number** of valid signs required to accept the file. Allows for Multisig f
 
 ### title
 
-The site's title, visible in the browser title and on ZeroHello.
+Заголовок сайта, показывается в заголовке браузера и ZeroHello.
 
-**Example**: ZeroTalk
+**Пример**: ZeroTalk
 
 
 ----
@@ -303,9 +301,9 @@ The site's title, visible in the browser title and on ZeroHello.
 
 ### translate
 
-Files need be translated. (use language json files in the `languages` directory)
+Файлы, которые нужно перевести (используются языковые json файлы в каталоге `languages`).
 
-**Example**: ["index.html", "js/all.js"]
+**Пример**: ["index.html", "js/all.js"]
 
 
 ----
@@ -313,9 +311,9 @@ Files need be translated. (use language json files in the `languages` directory)
 
 ### favicon
 
-The site's favicon. Replaces the default ZeroNet logo with a site-specific icon. Can be a .ico, .png, .svg, etc.
+Иконка сайта. Замещает лого ZeroNet. Может быть .ico, .png, .svg, и т.д.
 
-**Example**: favicon.ico
+**Пример**: favicon.ico
 
 
 ----
@@ -323,18 +321,18 @@ The site's favicon. Replaces the default ZeroNet logo with a site-specific icon.
 
 ### user_contents
 
-Rules of allowed user content within the current directory.
+Правила разрешённого пользовательского контента в текущем каталоге.
 
-Node                     | Description
+Узел                     | Описание
                     ---  | ---
-**archived**             | Delete the specified user content directory that is signed earlier than the specified timestamp (key: directory name, value: timestamp)
-**archived_before**      | Delete all user content directory if that is signed earlier than the specified timestamp
-**cert_signers**         | Accepted domains and valid signer addresses
-**cert_signers_pattern** | Accepted cert signers regexp pattern
-**permission_rules**     | Allowed file names and total directory size based on cert domain or authorization method
-**permissions**          | Per-user permissions. (false = banned user)
+**archived**             | Удалить в указанном каталоге пользовательский контент, который подписан раньше указанной метки времени (ключ: имя каталога, значение: метка времени)
+**archived_before**      | Удалить все каталоги пользовательского контента, которые подписаны раньше указанной метки времени
+**cert_signers**         | Принятые домены и действующие адреса подписывающих
+**cert_signers_pattern** | Паттерн регулярного выражения принятого сертификата подписывающих
+**permission_rules**     | Разрешенные имена файлов и общий размер каталога в зависимости от домена сертификации или метода авторизации
+**permissions**          | Разрешения для пользователей (false = пользователь забанен)
 
-**Example**:
+**Пример**:
 ```python
   "user_contents": {
     "archived": {
@@ -362,29 +360,29 @@ Node                     | Description
   }
 ```
 
-Note: [Some restrictions](#regular-expression-limitations) apply to regular expressions.
+Кстати: [Некоторые ограничения](#regular-expression-limitations) налагаются на регулярные выражения.
 
 ----
 
 
 ### viewport
 
-Content for the viewport meta tag. (Used for mobile-friendly pages)
+Контент для метатэга viewport. (Используется для страниц, оптимизированных для мобильного веба)
 
-**Example**: width=device-width, initial-scale=1.0
+**Пример**: width=device-width, initial-scale=1.0
 
 
 ----
 
 ## Regular expression limitations
 
-To avoid the [ReDoS](https://en.wikipedia.org/wiki/ReDoS) algorithmic complexity attack, the following restrictions are applied to each pattern:
+Во избежание атаки алгоритмической сложности [ReDoS](https://en.wikipedia.org/wiki/ReDoS), на каждый паттерн накладываются следующие ограничения:
 
- - `.` character is mandatory before repetition characters of `*,+,{`
- - Maximum 9 repetitions are allowed in a single pattern
- - The maximum length of a pattern is 255 characters
+ - символ `.` необходим перед символами повторения `*,+,{`
+ - допускается не более 9 повторений в одном паттерне
+ - максимальная длина паттерна 255 символов
 
-### Examples:
+### Примеры:
 
- - `((?!json).)*$` not allowed, because of `)` before the `*` character. Possible fix: `.*(?!json)$`
- - `(.*.epub|.*.jpg|.*.jpeg|.*.png|data/.*.gif|.*.avi|.*.ogg|.*.webm|.*.mp4|.*.mp3|.*.mkv|.*.eot)` not allowed, because it has 12 `.*` repetition patterns. Possible fix: `.*(epub|jpg|jpeg|png|data/gif|avi|ogg|webm|mp4|mp3|mkv|eot)`
+ - `((?!json).)*$` не допускается, из-за `)` перед символом `*`. Допустимо: `.*(?!json)$`
+ - `(.*.epub|.*.jpg|.*.jpeg|.*.png|data/.*.gif|.*.avi|.*.ogg|.*.webm|.*.mp4|.*.mp3|.*.mkv|.*.eot)` не допускается из-за повторения паттерна `.*` 12 раз. Допустимо: `.*(epub|jpg|jpeg|png|data/gif|avi|ogg|webm|mp4|mp3|mkv|eot)`
