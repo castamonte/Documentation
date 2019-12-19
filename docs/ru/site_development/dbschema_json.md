@@ -1,47 +1,47 @@
-# Structure of dbschema.json
+# Структура dbschema.json
 
-[Example dbschema.json file](https://github.com/HelloZeroNet/ZeroTalk/blob/master/dbschema.json)
+[Пример файла dbschema.json](https://github.com/HelloZeroNet/ZeroTalk/blob/master/dbschema.json)
 
-The code below will do the following:
+Этот код выполняет следующее:
 
- - If an updated data/users/*/data.json file is received (eg.: a user posted something):
-   - Every row in `data["topics"]` is loaded to the `topic` table
-   - Every key in `data["comment_votes"]` is loaded to the `comment_vote` table as `comment_hash` col and the values stored in same line as `vote`
- - If an updated data/users/content.json file is received (eg.: new user created):
-   - The `"user_id", "user_name", "max_size", "added"` key in value of `content["include"]` is loaded into the `user` table and the key is stored as `path`
+ - Если принят обновлённый файл data/users/*/data.json (например, пользователь написал какое-то сообщение):
+   - Каждая строка в `data["topics"]` загружается в таблицу `topic`
+   - Каждый ключ в `data["comment_votes"]` загружается в строку таблицы `comment_vote` в столбец `comment_hash` и значение - в столбец `vote` той же строки
+ - Если принят обновлённый файл data/users/content.json (например, создан новый пользователь):
+   - Ключи `"user_id", "user_name", "max_size", "added"` со значениями `content["include"]` загружаются в таблицу `user` и ключ запоминается как `path`
 
-> Note: [Some restriction](content_json/#regular-expressions-limitations) apply to regular expressions to avoid possible ReDoS vulnerability.
+> Кстати: [Некоторые ограничения](content_json/#regular-expressions-limitations) накладываются на регулярные выражения во избежание возможной уязвимости ReDoS.
 
 ```json
 
 {
-  "db_name": "ZeroTalk", # Database name (only used for debugging)
-  "db_file": "data/users/zerotalk.db", # Database file relative to site's directory
-  "version": 2, # 1 = Json table has path column that includes directory and filename
-                # 2 = Json table has separate directory and file_name column
-                # 3 = Same as version 2, but also has site column (for merger sites)
-  "maps": { # Json to database mappings
-    ".*/data.json": { # Regex pattern of file relative to db_file
-      "to_table": [ # Load values to table
+  "db_name": "ZeroTalk", # Имя базы данных (используется только для отладки)
+  "db_file": "data/users/zerotalk.db", # Файл базы данных относительно каталога сайта
+  "version": 2, # 1 = Таблица json имеет столбец с каталогом и именем файла
+                # 2 = Таблица json имеет отдельные столбцы для каталога и имени файла
+                # 3 = Как и версия 2, но также имеет столбец для сайта (для связанных сайтов)
+  "maps": { # Маппинг json в базу данных
+    ".*/data.json": { # Паттерн регулярного выражения файла относительно файла базы данных
+      "to_table": [ # Загрузка значений в таблицу
         {
-          "node": "topics", # Reading data.json[topics] key value
-          "table": "topic" # Feeding data to topic table
+          "node": "topics", # Чтение значения ключа из data.json[topics]
+          "table": "topic" # Заполнение данных в таблицу topic
         },
         {
-          "node": "comment_votes", # Reading data.json[comment_votes] key value
-          "table": "comment_vote", # Feeding data to comment_vote table
+          "node": "comment_votes", # Чтение значения ключа из data.json[comment_votes]
+          "table": "comment_vote", # Заполнение данных в таблицу comment_vote
           "key_col": "comment_hash",
-            # data.json[comment_votes] is a simple dict, the keys of the
-            # dict are loaded to comment_vote table comment_hash column
+            # data.json[comment_votes] это простой словарь, ключи словаря
+            # загружаются в таблицу comment_vote в столбец comment_hash
 
           "val_col": "vote"
-            # The data.json[comment_votes] dict values loaded to comment_vote table vote column
+            # значения словаря data.json[comment_votes] загружаются в таблицу comment_vote в столбец vote
 
         }
       ],
       "to_keyvalue": ["next_message_id", "next_topic_id"]
-        # Load data.json[next_topic_id] to keyvalue table
-        # (key: next_message_id, value: data.json[next_message_id] value)
+        # Загрузка data.json[next_topic_id] в таблицу ключ-значение
+        # (ключ: next_message_id, значение: data.json[next_message_id])
 
     },
     "content.json": {
@@ -51,20 +51,20 @@ The code below will do the following:
           "table": "user",
           "key_col": "path",
           "import_cols": ["user_id", "user_name", "max_size", "added"],
-            # Only import these columns to user table
+            # Импорт только этих столбцов в таблицу user
           "replaces": {
             "path": {"content.json": "data.json"}
-              # Replace content.json to data.json in the
-              # value of path column (required for joining)
+              # Замена content.json на data.json
+              # в столбце path (требуется для соединения)
           }
         }
       ],
-      "to_json_table": [ "cert_auth_type", "cert_user_id" ]  # Save cert_auth_type and cert_user_id directly to json table (easier and faster data queries)
+      "to_json_table": [ "cert_auth_type", "cert_user_id" ]  # Сохраняем cert_auth_type и cert_user_id прямо в таблице json (упрощая и ускоряя запросы данных)
     }
   },
-  "tables": { # Table definitions
-    "topic": { # Define topic table
-      "cols": [ # Cols of the table
+  "tables": { # Определения таблиц
+    "topic": { # Определение таблицы topic
+      "cols": [ # Столбцы таблицы
         ["topic_id", "INTEGER"],
         ["title", "TEXT"],
         ["body", "TEXT"],
@@ -74,11 +74,11 @@ The code below will do the following:
         ["json_id", "INTEGER REFERENCES json (json_id)"]
       ],
       "indexes": ["CREATE UNIQUE INDEX topic_key ON topic(topic_id, json_id)"],
-        # Indexes automatically created
+        # Индексы создаются автоматически
 
       "schema_changed": 1426195822
-        # Last time of the schema changed, if the client's version is different then
-        # automatically destroy the old, create the new table then reload the data into it
+        # Время последнего изменения схемы, если клиентская версия отличается, то
+        # старая автоматически удаляется, создаётся новая таблица и данные переносятся в неё
 
     },
     "comment_vote": {
@@ -102,7 +102,7 @@ The code below will do the following:
       "indexes": ["CREATE UNIQUE INDEX user_id ON user(user_id)", "CREATE UNIQUE INDEX user_path ON user(path)"],
       "schema_changed": 1426195825
     },
-    "json": {  # Json table format only required if you have specified to_json_table pattern anywhere
+    "json": {  # Формат таблицы json требуется только если Вы указали где-либо паттерн to_json_table
         "cols": [
             ["json_id", "INTEGER PRIMARY KEY AUTOINCREMENT"],
             ["directory", "TEXT"],
@@ -117,7 +117,7 @@ The code below will do the following:
 }
 ```
 
-## Example for data.json file
+## Пример файла data.json
 ```json
 {
   "next_topic_id": 2,
@@ -175,7 +175,7 @@ The code below will do the following:
 }
 ```
 
-## Example for content.json file
+## Пример файла content.json
 
 ```json
 {
